@@ -53,7 +53,20 @@
 <%  when "s3"%>
 <match **>
   type s3
+
+  aws_key_id "#{ENV['AWS_KEY_ID']}"
+  aws_sec_key "#{ENV['AWS_SEC_KEY']}"
   s3_bucket "#{ENV['S3_BUCKET_NAME']}"
+  s3_region "#{ENV['S3_REGION_NAME']}"
+  path "#{ENV['S3_LOGS_PATH']}"
+  buffer_path /var/log/fluent/s3
+
+  time_slice_format %Y%m%d%H
+  time_slice_wait 10m
+  utc
+
+  buffer_chunk_limit 256m
+
 </match>
 <% when "stackdriver"%>
 <match **>
